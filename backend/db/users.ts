@@ -52,8 +52,26 @@ class UserDatabase {
       balance: 0,
     };
 
+    const adminUser: DBUser = {
+      id: '2',
+      email: 'admin@example.com',
+      name: 'Admin',
+      avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200',
+      phone: '+1234567891',
+      verified: true,
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+      passwordHash: 'admin-password-hash',
+      socialProviders: [],
+      role: 'admin',
+      balance: 0,
+    };
+
     this.users.set(defaultUser.id, defaultUser);
     this.emailIndex.set(defaultUser.email.toLowerCase(), defaultUser.id);
+    
+    this.users.set(adminUser.id, adminUser);
+    this.emailIndex.set(adminUser.email.toLowerCase(), adminUser.id);
   }
 
   async findByEmail(email: string): Promise<DBUser | null> {
