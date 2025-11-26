@@ -9,8 +9,8 @@ interface CallStore {
   incomingCall: Call | null;
   ringtoneSound: unknown | null;
   dialToneSound: unknown | null;
-  ringtoneInterval: NodeJS.Timeout | null;
-  dialToneInterval: NodeJS.Timeout | null;
+  ringtoneInterval: ReturnType<typeof setInterval> | null;
+  dialToneInterval: ReturnType<typeof setInterval> | null;
   
   // Call actions
   initiateCall: (receiverId: string, listingId: string, type: CallType) => Promise<string>;

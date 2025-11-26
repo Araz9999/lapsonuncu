@@ -9,7 +9,7 @@ import { z } from 'zod';
  * Email validation schema with sanitization
  */
 export const emailSchema = z
-  .string({ required_error: 'Email tələb olunur' })
+  .string({ message: 'Email tələb olunur' })
   .email('Etibarlı email daxil edin')
   .max(254, 'Email maksimum 254 simvol ola bilər')
   .transform(email => email.toLowerCase().trim());
@@ -18,7 +18,7 @@ export const emailSchema = z
  * Strong password validation schema
  */
 export const passwordSchema = z
-  .string({ required_error: 'Şifrə tələb olunur' })
+  .string({ message: 'Şifrə tələb olunur' })
   .min(8, 'Şifrə ən azı 8 simvol olmalıdır')
   .max(128, 'Şifrə maksimum 128 simvol ola bilər')
   .regex(/[A-Z]/, 'Şifrə ən azı 1 böyük hərf olmalıdır')
@@ -53,7 +53,7 @@ export const phoneSchema = z
  * Name validation schema
  */
 export const nameSchema = z
-  .string({ required_error: 'Ad tələb olunur' })
+  .string({ message: 'Ad tələb olunur' })
   .min(2, 'Ad ən azı 2 simvol olmalıdır')
   .max(100, 'Ad maksimum 100 simvol ola bilər')
   .regex(/^[a-zA-ZəƏıİüÜöÖşŞğĞçÇ\s-]+$/, 'Ad yalnız hərflərdən ibarət olmalıdır')
@@ -64,7 +64,7 @@ export const nameSchema = z
  */
 export const amountSchema = (options?: { min?: number; max?: number }) =>
   z
-    .number({ required_error: 'Məbləğ tələb olunur' })
+    .number({ message: 'Məbləğ tələb olunur' })
     .positive('Məbləğ müsbət olmalıdır')
     .min(options?.min ?? 0.01, `Minimum məbləğ ${options?.min ?? 0.01} olmalıdır`)
     .max(options?.max ?? 1000000, `Maksimum məbləğ ${options?.max ?? 1000000} olmalıdır`)
@@ -81,7 +81,7 @@ export const uuidSchema = z
  * Token validation schema
  */
 export const tokenSchema = z
-  .string({ required_error: 'Token tələb olunur' })
+  .string({ message: 'Token tələb olunur' })
   .min(32, 'Token ən azı 32 simvol olmalıdır')
   .max(512, 'Token maksimum 512 simvol ola bilər')
   .regex(/^[a-fA-F0-9]+$/, 'Token yalnız hex simvollardan ibarət olmalıdır');

@@ -195,12 +195,17 @@ export function getErrorMessage(error: unknown): string {
  */
 export function formatErrorForLogging(error: unknown): Record<string, unknown> {
   if (error instanceof Error) {
-    return {
+    const errorObj: Record<string, unknown> = {
       name: error.name,
       message: error.message,
       stack: error.stack,
-      ...(error as Record<string, unknown>),
     };
+    
+    Object.keys(error).forEach(key => {
+      errorObj[key] = (error as any)[key];
+    });
+    
+    return errorObj;
   }
   
   return {

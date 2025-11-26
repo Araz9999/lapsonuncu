@@ -3,7 +3,7 @@
  * Fixes React hooks and component safety issues
  */
 
-import { useRef, useEffect, useCallback, DependencyList } from 'react';
+import { useRef, useEffect, useCallback, DependencyList, useState } from 'react';
 
 /**
  * Safe state update
@@ -83,7 +83,7 @@ export function useDebouncedCallback<T extends (...args: any[]) => any>(
   delay: number,
   deps: DependencyList
 ): T {
-  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
     return () => {
@@ -124,7 +124,7 @@ export function useThrottledCallback<T extends (...args: any[]) => any>(
         inThrottle.current = true;
         setTimeout(() => {
           inThrottle.current = false;
-        }, limit);
+        }, limit) as unknown as void;
       }
     }) as T,
     [limit, ...deps]
@@ -135,7 +135,7 @@ export function useThrottledCallback<T extends (...args: any[]) => any>(
  * Previous value hook
  */
 export function usePrevious<T>(value: T): T | undefined {
-  const ref = useRef<T>();
+  const ref = useRef<T | undefined>(undefined);
 
   useEffect(() => {
     ref.current = value;

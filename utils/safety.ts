@@ -240,14 +240,15 @@ export function isNonEmptyArray<T>(value: unknown): value is T[] {
  * Handles null/undefined gracefully
  */
 export function safeMerge<T extends object>(
-  ...objects: (T | null | undefined)[]
+  ...objects: (Partial<T> | null | undefined)[]
 ): T {
-  return objects.reduce((acc, obj) => {
+  const result = objects.reduce((acc, obj) => {
     if (obj === null || obj === undefined) {
       return acc;
     }
-    return { ...acc, ...obj };
-  }, {} as T);
+    return { ...acc, ...obj } as Partial<T>;
+  }, {} as Partial<T>);
+  return result as T;
 }
 
 /**
@@ -334,7 +335,7 @@ export function debounce<T extends (...args: any[]) => any>(
   fn: T,
   delay: number
 ): (...args: Parameters<T>) => void {
-  let timeoutId: NodeJS.Timeout | null = null;
+  let timeoutId: ReturnType<typeof setTimeout> | null = null;
   
   return (...args: Parameters<T>) => {
     if (timeoutId) {

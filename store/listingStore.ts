@@ -41,7 +41,7 @@ const notifyStoreFollowersIfNeeded = async (listing: Listing) => {
 };
 
 // Check for expiring listings - this will be called from app initialization
-let expiringListingsInterval: NodeJS.Timeout | null = null;
+let expiringListingsInterval: ReturnType<typeof setInterval> | null = null;
 
 export const initListingStoreInterval = () => {
   if (expiringListingsInterval) {

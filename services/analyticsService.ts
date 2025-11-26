@@ -215,7 +215,7 @@ class AnalyticsService {
       properties: {
         amount,
         currency,
-        item_id: itemId,
+        item_id: itemId ?? null,
       },
     });
   }
